@@ -21,4 +21,14 @@ def count(method: Callable) -> Callable:
 
 def get_page(url: str) -> str:
     """Get the HTML content of a page"""
-    return requests.get(url).text
+    cache_key = f"count:{url}"
+    cached_content = red.get(url)
+    if cached_content:
+        return cached_content.decode()
+
+    response = requests.get(url)
+    content = response.text
+
+    red.setex(cache_key, 10, content)
+
+    return content
