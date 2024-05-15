@@ -63,6 +63,16 @@ class Cache:
             return fn(value)
         return value
 
+    # Retrieving lists using replay functionality
+    def replay(self, method: Callable) -> str:
+        """Replay data"""
+        method_name = method.__qualname__
+        inputs = self._redis.lrange(f"{method_name}:inputs", 0, -1)
+        outputs = self._redis.lrange(f"{method_name}:outputs", 0, -1)
+
+        for i, o in zip(inputs, outputs):
+            print(f"{method_name}({i}) -> {o}")
+
     def get_str(self, key: str) -> Optional[str]:
         """Get data from Redis as string"""
         return self.get(key, lambda x: x.decode('utf-8'))
