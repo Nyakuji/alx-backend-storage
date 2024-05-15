@@ -3,3 +3,5 @@
 metal_bands.sql
 tmp_res
 names.sql
+*main.py
+__pycache__
