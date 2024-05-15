@@ -40,10 +40,10 @@ def call_history(method: Callable) -> Callable:
 class Cache:
     """Cache class"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Constructor"""
         self._redis = redis.Redis()
-        self._redis.flushdb
+        self._redis.flushdb()
 
     # Storing data in Redis
     @count_calls
