@@ -71,7 +71,7 @@ class Cache:
         outputs = self._redis.lrange(f"{method_name}:outputs", 0, -1)
 
         for i, o in zip(inputs, outputs):
-            print(f"{method_name}({i}) -> {o}")
+            print(f"{method_name}({i.decode('utf-8')}) -> {o.decode('utf-8')}")
 
     def get_str(self, key: str) -> Optional[str]:
         """Get data from Redis as string"""
