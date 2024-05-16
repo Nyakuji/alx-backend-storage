@@ -32,3 +32,22 @@ def get_page(url: str) -> str:
     red.setex(cache_key, 10, content)
 
     return content
+
+
+@count
+def get_page(url: str) -> str:
+    """Get the HTML content of a page"""
+    cache_key = f"count:{url}"
+    cached_content = red.get(url)
+    if cached_content:
+        return cached_content.decode()
+
+    response = requests.get(url)
+    content = response.text
+
+    red.setex(cache_key, 10, content)
+
+    return content
+
+
+red.set("get_page", 0)
